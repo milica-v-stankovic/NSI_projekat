@@ -29,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QAction *saveAction = new QAction(tr("&Save"), this);
     QAction *saveAsAction = new QAction(tr("Save &As"), this);
     QAction *exitAction = new QAction(tr("E&xit"), this);
+    QAction *zoomInAction = new QAction(tr("Zoom &In"), this);
+    QAction *zoomOutAction = new QAction(tr("Zoom &Out"), this);
 
     imageArea = new ImageArea(this);
     setCentralWidget(imageArea); // or add to layout
@@ -37,6 +39,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     fileMenu->addAction(loadAction);
     fileMenu->addAction(saveAction);
     fileMenu->addAction(saveAsAction);
+    fileMenu->addAction(zoomInAction);
+    fileMenu->addAction(zoomOutAction);
     fileMenu->addSeparator();
     fileMenu->addAction(exitAction);
 
@@ -78,6 +82,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(loadAction, &QAction::triggered, this, &MainWindow::openImage);
     connect(saveAction, &QAction::triggered, this, &MainWindow::saveImage);
     connect(saveAsAction, &QAction::triggered, this, &MainWindow::saveImageAs);
+    connect(zoomInAction, &QAction::triggered, this, &MainWindow::zoomIn);
+    connect(zoomOutAction, &QAction::triggered, this, &MainWindow::zoomOut);
     connect(exitAction, &QAction::triggered, this, &QMainWindow::close);
 
     connect(resizeAction, &QAction::triggered, this, &MainWindow::resizeImage);
@@ -86,6 +92,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(rotateCustomAction, &QAction::triggered, this, &MainWindow::rotateCustom);
     connect(undoAction, &QAction::triggered, this, &MainWindow::undo);
     connect(redoAction, &QAction::triggered, this, &MainWindow::redo);
+
+    loadAction->setShortcut(QKeySequence::Open);           // Ctrl+O
+    saveAction->setShortcut(QKeySequence::Save);           // Ctrl+S
+    undoAction->setShortcut(QKeySequence::Undo);           // Ctrl+Z
+    redoAction->setShortcut(QKeySequence::Redo);           // Ctrl+Y or Ctrl+Shift+Z
+    zoomInAction->setShortcut(QKeySequence("Ctrl++"));     // Ctrl + Plus
+    zoomOutAction->setShortcut(QKeySequence("Ctrl+-"));    // Ctrl + Minus
+    grayscaleAction->setShortcut(QKeySequence("Ctrl+G"));  // Ctrl + G
+    invertAction->setShortcut(QKeySequence("Ctrl+I"));     // Ctrl + I
+
 
     resize(1200, 800);
 }
