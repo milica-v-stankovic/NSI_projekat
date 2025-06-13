@@ -102,6 +102,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     grayscaleAction->setShortcut(QKeySequence("Ctrl+G"));  // Ctrl + G
     invertAction->setShortcut(QKeySequence("Ctrl+I"));     // Ctrl + I
 
+    setAcceptDrops(true);
 
     resize(1200, 800);
 }
@@ -128,6 +129,7 @@ void MainWindow::openImage() {
         QMessageBox::warning(this, "Open Image", "Failed to load image.");
         return;
     }
+
     updateImage(loaded);
     updateWindowTitle();
 }
